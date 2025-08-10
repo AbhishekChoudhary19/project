@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suit Style Selection</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: #0f172a;
+      background-image: linear-gradient(rgba(13, 12, 12, 0.669),rgba(0, 0, 0, 0.388)), url("bgtrouser.jpg");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      overflow-x: hidden;
+    }
+    nav {
+      background-color: #0f172a;
+      padding: 20px 40px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    nav img {
+      height: 80px;
+      width: auto;
+      transition: transform 0.3s ease;
+    }
+    nav img:hover {
+      transform: scale(1.05);
+    }
+    .nav-links {
+      display: flex;
+      gap: 30px;
+    }
+    .nav-links a {
+      color: #e2e8f0;
+      text-decoration: none;
+      font-size: 1.1em;
+      font-weight: 400;
+      transition: color 0.3s ease;
+      letter-spacing: 0.5px;
+    }
+    .nav-links a:hover {
+      color: #000000;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3em;
+      color: #e2e8f0;
+      margin-top: 120px;
+      margin-bottom: 40px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      position: relative;
+    }
+    h2::after {
+      content: 'AUXTER CLUB';
+      width: 90%;
+      height: 2px;
+      background-color: #e9e9e9;
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    form {
+      background: linear-gradient(145deg, rgba(90, 90, 90, 0.98), rgba(10, 9, 9, 0.98));
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      max-width: 1200px;
+      margin: 0 auto 40px;
+      animation: fadeIn 1.2s ease-in-out;
+     transition: transform 0.3s ease;
+    }
+    h3 {
+      font-family: 'Playfair Display', serif;
+      color: #ffffff;
+      font-size: 2em;
+      margin-bottom: 25px;
+      padding-bottom: 10px;
+      font-weight: 600;
+    }
+    .category-section {
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      position: relative;
+      background: rgba(12, 9, 9, 0.274);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 5px 15px rgb(0, 0, 0);
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: 400;
+      color: #ffffff;
+      font-size: 1.2em;
+      letter-spacing: 0.5px;
+      text-align: left;
+      margin-bottom: 15px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #ffffff;
+    }
+    .style-options {
+      width: fit-content;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: flex-start;
+      margin-top: 15px;
+    }
+    .style-option {
+      cursor: pointer;
+      text-align: center;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      position: relative;
+      padding: 10px;
+      border-radius: 8px;
+      background: white;
+    }
+    .style-option img {
+      max-width: 200px;
+      height: auto;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+      background-color: #fff;
+      padding: 5px;
+    }
+    .style-option.selected {
+      background-color: #0000002f;
+      border-color: #040303;
+    }
+    .style-option.selected img {
+      border-color: #6246a9;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+      transform: scale(1.05);
+    }
+    .style-option:hover {
+      background-color: #f0f8ff;
+      border-color: #371b4a;
+    }
+    .style-option:hover img {
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgb(0, 0, 0);
+      border-color:#000000;
+    }
+    .style-option p {
+      margin-top: 8px;
+      font-size: 0.9em;
+      color: #475569;
+      font-weight: 400;
+      letter-spacing: 0.3px;
+    }
+    .style-groups {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .style-group {
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .style-group h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5em;
+      color: #000000;
+      margin-bottom: 10px;
+      font-weight: 600;
+      border-bottom: 1px solid #000000;
+      padding-bottom: 5px;
+    }
+    .style-group .style-options {
+      justify-content: flex-start;
+      gap: 15px;
+    }
+    .error {
+      color: #d32f2f;
+      font-size: 0.95em;
+      margin-top: 10px;
+      font-weight: 400;
+      background-color: #ffe6e6;
+      padding: 8px;
+      border-radius: 6px;
+      display: none;
+    }
+    .error.show {
+      display: inline-block;
+    }
+    button {
+      padding: 15px 40px;
+      background: linear-gradient(145deg, #0f172a, #1e293b);
+      color: #e2e8f0;
+      border: 2px solid #3498db;
+      border-radius: 8px;
+      font-size: 1.1em;
+      font-weight: 400;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.3s, color 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      display: block;
+      margin: 30px auto 0;
+    }
+    button:hover {
+      background: linear-gradient(145deg, #3498db, #2980b9);
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+    .preview-section {
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(240, 240, 240, 0.98));
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      max-width: 1200px;
+      margin: 20px auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      border: 1px solid #e2e8f0;
+    }
+    .preview-item {
+      text-align: center;
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border: 1px solid #000000;
+    }
+    .preview-item img {
+      max-width: 150px;
+      height: auto;
+      border-radius: 10px;
+      border: 2px solid #000000;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+      padding: 5px;
+      transition: transform 0.2s ease;
+    }
+    .preview-item img:hover {
+      transform: scale(1.05);
+    }
+    .preview-item p {
+      margin-top: 10px;
+      font-size: 1em;
+      color: #0f172a;
+      font-weight: 400;
+      letter-spacing: 0.3px;
+    }
+    .print-button {
+      margin: 20px auto;
+    }
+    .print-view {
+      display: none;
+    }
+    .print-view .preview-item {
+      display: inline-block;
+      margin: 10px;
+    }
+    @media print {
+      nav, footer, button, .print-button, form, .preview-section {
+        display: none;
+      }
+      .print-view {
+        display: block;
+        width: 100%;
+        height: auto;
+        box-sizing: border-box;
+        padding: 20px;
+      }
+      .print-view .print-header {
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .print-view .print-header h2 {
+        margin-top: 0;
+        color: #0f172a;
+        font-size: 2em;
+      }
+      .print-view .print-header p {
+        font-size: 1em;
+        color: #333;
+        margin: 5px 0;
+      }
+      .print-view #printPreview {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: auto;
+        gap: 15px;
+        justify-items: center;
+        align-items: start;
+        width: 100%;
+        max-width: 100%;
+        padding: 10px;
+      }
+      .print-view .preview-item {
+        text-align: center;
+        width: 100%;
+        max-width: 200px;
+        box-sizing: border-box;
+      }
+      .print-view .preview-item img {
+        max-width: 100px;
+        height: auto;
+        border: 2px solid #000000;
+        box-shadow: none;
+        border-radius: 5px;
+        padding: 5px;
+        background-color: #fff;
+        display: block;
+      }
+      .print-view .preview-item p {
+        font-size: 0.8em;
+        color: #333;
+        margin-top: 5px;
+        display: none;
+      }
+      .print-view #printError {
+        color: #d32f2f;
+        font-size: 1em;
+        text-align: center;
+        margin-top: 20px;
+      }
+    }
+    footer {
+      background: linear-gradient(145deg, #0f172a, #1e293b);
+      width: 100%;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #e2e8f0;
+      font-size: 0.9em;
+      border-top: 1px solid rgba(52, 152, 219, 0.2);
+    }
+    .footer-logo {
+      height: 50px;
+      width: auto;
+      transition: transform 0.3s ease;
+    }
+    .footer-logo:hover {
+      transform: scale(1.05);
+    }
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+    .footer-links a {
+      color: #e2e8f0;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+    }
+    .footer-links a:hover {
+      color: #3498db;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @media (max-width: 768px) {
+      nav {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .nav-links {
+        gap: 20px;
+      }
+      form, .preview-section {
+        padding: 20px;
+      }
+      h2 {
+        font-size: 2.5em;
+      }
+      h3 {
+        font-size: 1.6em;
+      }
+      button {
+        padding: 12px 30px;
+        font-size: 1em;
+        width: 100%;
+      }
+      nav img {
+        height: 60px;
+      }
+      .footer-logo {
+        height: 40px;
+      }
+      footer {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .preview-item img {
+        max-width: 100px;
+      }
+      .style-option img {
+        max-width: 80px;
+      }
+      .category-section:not(:last-child)::after {
+        width: 90%;
+      }
+      .style-group h4 {
+        font-size: 1.2em;
+      }
+    }
+    @media (max-width: 480px) {
+      nav {
+        padding: 10px 15px;
+      }
+      .nav-links {
+        gap: 15px;
+        flex-direction: column;
+      }
+      h2 {
+        font-size: 2em;
+      }
+      h3 {
+        font-size: 1.4em;
+      }
+      button {
+        font-size: 0.9em;
+      }
+      nav img {
+        height: 50px;
+      }
+      .footer-logo {
+        height: 35px;
+      }
+      .preview-item img {
+        max-width: 80px;
+      }
+      .style-option img {
+        max-width: 60px;
+      }
+      .category-section:not(:last-child)::after {
+        width: 95%;
+      }
+      .style-group h4 {
+        font-size: 1.1em;
+      }
+    }
+    .style-options {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      padding: 20px;
+      margin-left: 6%;
+    }
+    .style-option {
+      width: 200px;
+      height: 200px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      box-sizing: border-box;
+      transition: transform 0.2s ease;
+    }
+    .style-option:hover {
+      transform: scale(1.05);
+    }
+    .style-option img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+    .style-option p {
+      font-size: 1em;
+      color: #000000;
+      text-align: center;
+      margin: 0;
+    }
+</style>
+</head>
+<body>
+<h2>Suit Style Selection</h2><br><br><br><br>
+<form id="styleForm">
+    <h3>Suit Customizations</h3>
+    <div class="category-section">
+        <label>Jacket Type:</label>
+        <div class="style-groups" data-category="Jacket Type">
+            <div class="style-group">
+                <h4>Normal Jacket</h4>
+                <div class="style-options">
+                    <div class="style-option" data-value="1N, normal jacket" data-image="1N.png">
+                        <img src="1N.png" alt="Normal Jacket">
+                        <p>Standard</p>
+                    </div>
+                    <div class="style-option" data-value="1l, long jacket" data-image="1l.png">
+                        <img src="1l.png" alt="Long Jacket">
+                        <p>Long</p>
+                    </div>
+                </div>
+            </div>
+            <div class="style-group">
+                <h4>Dinner Jacket</h4>
+                <div class="style-options">
+                    <div class="style-option" data-value="1S, dinner jacket" data-image="1S.png">
+                        <img src="1S.png" alt="Dinner Jacket">
+                        <p>Standard</p>
+                    </div>
+                    <div class="style-option" data-value="1LS, dinner jacket long" data-image="1LS.png">
+                        <img src="1LS.png" alt="Dinner Jacket Long">
+                        <p>Long</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="jacketTypeError" class="error"></div>
+    </div>
+    <div class="category-section">
+        <label>Jacket Style:</label>
+        <div class="style-groups" data-category="Jacket Style">
+            <div class="style-group">
+                <h4>Single Breasted</h4>
+                <div class="style-options">
+                    <div class="style-option" data-value="2I, single breasted, 1 button" data-image="2I.png">
+                        <img src="2I.png" alt="Single Breasted, 1 Button">
+                        <p>1 Button</p>
+                    </div>
+                    <div class="style-option" data-value="2A, single breasted, 2 button" data-image="2A.png">
+                        <img src="2A.png" alt="Single Breasted, 2 Button">
+                        <p>2 Button</p>
+                    </div>
+                    <div class="style-option" data-value="2B, single breasted, 3 button" data-image="2B.png">
+                        <img src="2B.png" alt="Single Breasted, 3 Button">
+                        <p>3 Button</p>
+                    </div>
+                </div>
+            </div>
+            <div class="style-group">
+                <h4>Single Breasted Peak Lapel</h4>
+                <div class="style-options">
+                    <div class="style-option" data-value="2K, single breasted, 1 button peak lapel" data-image="2K.png">
+                        <img src="2K.png" alt="Single Breasted, 1 Button Peak Lapel">
+                        <p>1 Button Peak Lapel</p>
+                    </div>
+                    <div class="style-option" data-value="2M, single breasted, 2 button peak lapel" data-image="2M.png">
+                        <img src="2M.png" alt="Single Breasted, 2 Button Peak Lapel">
+                        <p>2 Button Peak Lapel</p>
+                    </div>
+                    <div class="style-option" data-value="2N, single breasted, 3 button peak lapel" data-image="2N.png">
+                        <img src="2N.png" alt="Single Breasted, 3 Button Peak Lapel">
+                        <p>3 Button Peak Lapel</p>
+                    </div>
+                </div>
+            </div>
+            <div class="style-group">
+                <h4>Double Breasted</h4>
+                <div class="style-options">
+                    <div class="style-option" data-value="2C1, double breasted, 1 closing button, 2 blind points" data-image="2C1.png">
+                        <img src="2C1.png" alt="Double Breasted, 1 Closing Button, 2 Blind Points">
+                        <p>1 Closing Button, 2 Blind Points</p>
+                    </div>
+                    <div class="style-option" data-value="2C2, double breasted, 1 closing button, 1 blind points" data-image="2C2.png">
+                        <img src="2C2.png" alt="Double Breasted, 1 Closing Button, 1 Blind Point">
+                        <p>1 Closing Button, 1 Blind Point</p>
+                    </div>
+                    <div class="style-option" data-value="2D1, double breasted, 2 closing button, 1 blind points" data-image="2D1.png">
+                        <img src="2D1.png" alt="Double Breasted, 2 Closing Button, 1 Blind Point">
+                        <p>2 Closing Button, 1 Blind Point</p>
+                    </div>
+                    <div class="style-option" data-value="2D4, double breasted, 2 closing button, without blind points" data-image="2D4.png">
+                        <img src="2D4.png" alt="Double Breasted, 2 Closing Button, Without Blind Points">
+                        <p>2 Closing Button, Without Blind Points</p>
+                    </div>
+                </div>
+            </div>
+            <div class="style-group">
+                <h4>Shawl Collar</h4>
+                <div class="style-options">
+                    <div class="style-option" data-value="2E, single breasted, 1 button shawl collar" data-image="2E.png">
+                        <img src="2E.png" alt="Single Breasted, 1 Button Shawl Collar">
+                        <p>Single Breasted, 1 Button</p>
+                    </div>
+                    <div class="style-option" data-value="2P, double breasted, 1 closing button shawl collar" data-image="2P.png">
+                        <img src="2P.png" alt="Double Breasted, 1 Closing Button Shawl Collar">
+                        <p>Double Breasted, 1 Closing Button</p>
+                    </div>
+                    <div class="style-option" data-value="2Q, double breasted, 2 closing button shawl collar" data-image="2Q.png">
+                        <img src="2Q.png" alt="Double Breasted, 2 Closing Button Shawl Collar">
+                        <p>Double Breasted, 2 Closing Button</p>
+                    </div>
+                </div>
+            </div>
+            <div class="style-group">
+                <h4>Nehru</h4>
+                <div class="style-options">
+                    <div class="style-option" data-value="2R, single breasted, 4 button Nehru" data-image="2R.png">
+                        <img src="2R.png" alt="Single Breasted, 4 Button Nehru">
+                        <p>4 Button Nehru</p>
+                    </div>
+                    <div class="style-option" data-value="2RR, single breasted, 4 button Nehru, bottom/front square" data-image="2RR.png">
+                        <img src="2RR.png" alt="Single Breasted, 4 Button Nehru, Bottom/Front Square">
+                        <p>4 Button Nehru, Front/Square</p>
+                    </div>
+                    <div class="style-option" data-value="2S, single breasted, 5 button Nehru" data-image="2S.png">
+                        <img src="2S.png" alt="Single Breasted, 5 Button Nehru">
+                        <p>5 Button Nehru</p>
+                    </div>
+                    <div class="style-option" data-value="2SS, single breasted, 5 button Nehru, bottom/front square" data-image="2SS.png">
+                        <img src="2SS.png" alt="Single Breasted, 5 Button Nehru, Bottom/Front Square">
+                        <p>5 Button Nehru, Bottom/Front Square</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="jacketStyleError" class="error"></div>
+    </div>
+    <div class="category-section">
+        <label>Back Style:</label>
+        <div class="style-groups" data-category="Back Style">
+            <div class="style-group">
+                <h4>Plain Back</h4>
+                <div class="style-options">
+                    <div class="style-option" data-value="3A1, Plain back (NO VENTS!!!)" data-image="3A1.png">
+                        <img src="3A1.png" alt="Plain Back (No Vents)">
+                        <p>No Vents</p>
+                    </div>
+                    <div class="style-option" data-value="3A2, Plain back, buggy lining" data-image="3A2.png">
+                        <img src="3A2.png" alt="Plain Back, Buggy Lining">
+                        <p>Buggy Lining</p>
+                    </div>
+                    <div class="style-option" data-value="3B1, Plain back, center vent" data-image="3B1.png">
+                        <img src="3B1.png" alt="Plain Back, Center Vent">
+                        <p>Center Vent</p>
+                    </div>
+                    <div class="style-option" data-value="3C1, Plain back, Side vent" data-image="3C1.png">
+                        <img src="3C1.png" alt="Plain Back, Side Vent">
+                        <p>Side Vent</p>
+                    </div>
+                </div>
+            </div>
+            <div class="style-group">
+                <h4>Buggy Lining</h4>
+                <div class="style-options">
+                    <div class="style-option" data-value="3B2, buggy lining, center vent" data-image="3B2.png">
+                        <img src="3B2.png" alt="Buggy Lining, Center Vent">
+                        <p>Center Vent</p>
+                    </div>
+                    <div class="style-option" data-value="3C2, buggy lining, side vent" data-image="3C2.png">
+                        <img src="3C2.png" alt="Buggy Lining, Side Vent">
+                        <p>Side Vent</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="backStyleError" class="error"></div>
+    </div>
+    <div class="category-section">
+        <label>Jacket Pocket Style:</label>
+        <div class="style-groups" data-category="Jacket Pocket Style">
+            <div class="style-group">
+                <h4>Welt Breast Pocket</h4>
+                <div class="style-options">
+                    <div class="style-option" data-value="4C2, Welt breast pocket, Flap side pockets" data-image="4C2.png">
+                        <img src="4C2.png" alt="Welt Breast Pocket, Flap Side Pockets">
+                        <p>Flap Side Pockets</p>
+                    </div>
+                    <div class="style-option" data-value="4E2, Welt breast pocket, Flap flap side pockets, ticket pocket" data-image="4E2.png">
+                        <img src="4B2.png" alt="Welt Breast Pocket, Flap Side Pockets, Ticket Pocket">
+                        <p>Flap Side Pockets, Ticket Pocket</p>
+                    </div>
+                    <div class="style-option" data-value="4D2, Welt breast pocket, Slant flap side pockets" data-image="4D2.png">
+                        <img src="4B2.png" alt="Welt Breast Pocket, Slant Flap Side Pockets">
+                        <p>Slant Flap Side Pockets</p>
+                    </div>
+                    <div class="style-option" data-value="4F2, Welt breast pocket, Slant Flap side pockets, ticket pocket" data-image="4F2.png">
+                        <img src="4H2.png" alt="Welt Breast Pocket, Slant Flap Side Pockets, Ticket Pocket">
+                        <p>Slant Flap Side Pockets, Ticket Pocket</p>
+                    </div>
+                    <div class="style-option" data-value="4A2, Welt breast pocket, side patch pockets" data-image="4A2.png">
+                        <img src="4H2.png" alt="Welt Breast Pocket, Side Patch Pockets">
+                        <p>Side Patch Pockets</p>
+                    </div>
+                    <div class="style-option" data-value="4H2, Welt breast pocket, side patch pockets with flaps" data-image="4H2.png">
+                        <img src="4H2.png" alt="Welt Breast Pocket, Side Patch Pockets with Flaps">
+                        <p>Side Patch with Flaps</p>
+                    </div>
+                    <div class="style-option" data-value="4B2, breast pocket, side jetted pockets, no flaps" data-image="4B2.png">
+                        <img src="4B2.png" alt="Welt Breast pocket, Side Jetted Pockets, no Flaps">
+                        <p>Side Jetted Pockets, No Flaps</p>
+                    </div>
+                </div>
+            </div>
+            <div class="style-group">
+                <h4>Patch Breast Pocket</h4>
+                <div class="style-options">
+                    <div class="style-option" data-value="4A3, Patch breast pocket, side patch pockets" data-image="4A3.png">
+                        <img src="4A3.png" alt="Patch Breast Pocket, Side Patch Pockets">
+                        <p>Side Patch Pockets</p>
+                    </div>
+                    <div class="style-option" data-value="4H3, Patch breast pocket, side patch pockets with flaps" data-image="4H3.png">
+                        <img src="4H3.png" alt="Patch Breast Pocket, Side Patch Pockets with Flaps">
+                        <p>Side Patch with Flaps</p>
+                    </div>
+                </div>
+            </div>
+            <div class="style-group">
+                <h4>Without Pockets</h4>
+                <div class="style-options">
+                    <div class="style-option" data-value="4G1, Without pockets" data-image="4G1.png">
+                        <img src="4G1.png.png" alt="Without Pockets">
+                        <p>No Pockets</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="jacketPocketStyleError" class="error"></div>
+    </div>
+    <div class="category-section">
+        <label>Cuff Style:</label>
+        <div class="style-groups" data-category="Cuff Style">
+            <div class="style-group">
+                <h4>Sham Cuffs</h4>
+                <div class="style-options">
+                    <div class="style-option" data-value="5S3, Sham cuffs, 3 buttons" data-image="sham_cuffs_3_buttons.png">
+                        <img src="sham_cuffs_3_buttons.png" alt="Sham Cuffs, 3 Buttons">
+                        <p>3 Buttons</p>
+                    </div>
+                    <div class="style-option" data-value="5S4, Sham cuffs, 4 buttons" data-image="sham_cuffs_4_buttons.png">
+                        <img src="sham_cuffs_4_buttons.png" alt="Sham Cuffs, 4 Buttons">
+                        <p>4 Buttons</p>
+                    </div>
+                    <div class="style-option" data-value="5S3X, Sham cuffs, 3 kissing buttons" data-image="sham_cuffs_3_kissing_buttons.png">
+                        <img src="sham_cuffs_3_kissing_buttons.png" alt="Sham Cuffs, 3 Kissing Buttons">
+                        <p>3 Kissing Buttons</p>
+                    </div>
+                    <div class="style-option" data-value="5S4X, Sham cuffs, 4 kissing buttons" data-image="sham_cuffs_4_kissing_buttons.png">
+                        <img src="sham_cuffs_4_kissing_buttons.png" alt="Sham Cuffs, 4 Kissing Buttons">
+                        <p>4 Kissing Buttons</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="cuffStyleError" class="error"></div>
+    </div>
+    <div class="category-section">
+        <label>Additional Details:</label>
+        <div class="style-group">
+            <h4>Fabric and Comments</h4>
+            <div class="input-group">
+                <label for="fabricNo" style="color: #040303;">Fabric Name:</label>
+                <input type="text" id="fabricNo" name="fabricNo" style="width: 70%;">
+            </div>
+            <div class="input-group">
+                <label for="comment" style="color: #040303;">Description:</label>
+                <input type="text" id="comment" name="comment">
+            </div>
+        </div>
+        <div id="additionalDetailsError" class="error"></div>
+    </div>
+    <button type="button" onclick="saveStyles()">Save Suit Styles</button>
+    <button type="button" onclick="submitDesign()">Submit Design</button>
+</form>
+<button class="print-button" onclick="printStyles()">Print Selected Suit Styles</button>
+<div class="print-view" id="printView">
+    <div class="print-header">
+        <h2>Selected Suit Styles</h2>
+        <p id="customerName">Customer Name:</p>
+        <p id="orderNumber">Order Number:</p>
+    </div>
+    <div id="printPreview"></div>
+    <div id="printError" class="error" style="display: none;">No styles selected for printing.</div>
+</div>
+<script>
+const { jsPDF } = window.jspdf;
+const selectedOptions = {};
+const selectLabels = {
+    'Jacket Type': 'Jacket Type',
+    'Jacket Style': 'Jacket Style',
+    'Back Style': 'Back Style',
+    'Jacket Pocket Style': 'Jacket Pocket Style',
+    'Cuff Style': 'Cuff Style'
+};
+function loadStyles() {
+    const savedStyles = JSON.parse(localStorage.getItem('suitStyles') || '{}');
+    console.log('Loaded styles from localStorage:', savedStyles);
+    for (const [key, {value, image}] of Object.entries(savedStyles)) {
+        if (selectLabels[key]) {
+            const categoryDiv = document.querySelector(`[data-category="${key}"]`);
+            if (categoryDiv) {
+                const option = categoryDiv.querySelector(`.style-option[data-value="${value}"]`);
+                if (option) {
+                    option.classList.add('selected');
+                    selectedOptions[key] = { value, image };
+                }
+            }
+        }
+    }
+    updatePreview();
+    console.log('Initial selectedOptions:', selectedOptions);
+}
+document.querySelectorAll('.style-option').forEach(option => {
+    option.addEventListener('click', () => {
+        const category = option.closest('[data-category]').getAttribute('data-category');
+        const value = option.getAttribute('data-value');
+        const image = option.getAttribute('data-image');
+        const previouslySelected = option.closest('[data-category]').querySelector('.style-option.selected');
+        if (previouslySelected) {
+            previouslySelected.classList.remove('selected');
+        }
+        option.classList.add('selected');
+        selectedOptions[category] = { value, image };
+        updatePreview();
+        console.log(`Selected ${category}:`, selectedOptions[category]);
+    });
+});
+function updatePreview() {
+    const previewSection = document.getElementById('previewSection') || document.createElement('div');
+    if (!previewSection.id) {
+        previewSection.id = 'previewSection';
+        previewSection.className = 'preview-section';
+        document.getElementById('styleForm').after(previewSection);
+    }
+    previewSection.innerHTML = '';
+    Object.entries(selectedOptions).forEach(([key, {value, image}]) => {
+        if (value && image) {
+            const label = selectLabels[key] || key;
+            const displayText = value.split(',')[1]?.trim() || value;
+            const previewItem = document.createElement('div');
+            previewItem.className = 'preview-item';
+            previewItem.innerHTML = `
+                <img src="${image}" alt="${displayText}" onerror="console.error('Failed to load image: ${image}')">
+                <p>${label}: ${displayText}</p>
+            `;
+            previewSection.appendChild(previewItem);
+        }
+    });
+}
+function validateStyles() {
+    const errors = {};
+    const requiredCategories = [
+        'Jacket Type', 'Jacket Style', 'Back Style', 'Jacket Pocket Style', 'Cuff Style'
+    ];
+    requiredCategories.forEach(category => {
+        if (!selectedOptions[category] || !selectedOptions[category].value) {
+            errors[category] = `Please select a ${category.toLowerCase()} style.`;
+        }
+    });
+    const fabricNo = document.getElementById('fabricNo').value.trim();
+    const comment = document.getElementById('comment').value.trim();
+    
+}
+function displayErrors(errors) {
+    document.querySelectorAll('.error').forEach(el => {
+        el.innerText = '';
+        el.classList.remove('show');
+    });
+    Object.entries(errors).forEach(([key, message]) => {
+        const errorEl = document.getElementById(
+            key === 'fabricNo' || key === 'comment' ? 'additionalDetailsError' :
+            key === 'Jacket Type' ? 'jacketTypeError' :
+            key === 'Jacket Style' ? 'jacketStyleError' :
+            key === 'Back Style' ? 'backStyleError' :
+            key === 'Jacket Pocket Style' ? 'jacketPocketStyleError' :
+            'cuffStyleError'
+        );
+        if (errorEl) {
+            errorEl.innerText = message;
+            errorEl.classList.add('show');
+        }
+    });
+}
+function saveStyles() {
+    const errors = validateStyles();
+    if (Object.keys(errors).length > 0) {
+        console.log('Style validation errors:', errors);
+        displayErrors(errors);
+        alert('Please select all required suit styles: ' + Object.values(errors).join(', '));
+        return;
+    }
+    const existingStyles = JSON.parse(localStorage.getItem('suitStyles') || '{}');
+    const updatedStyles = { ...existingStyles, ...selectedOptions };
+    localStorage.setItem('suitStyles', JSON.stringify(updatedStyles));
+    console.log('Saved suit styles to localStorage:', updatedStyles);
+    alert('Suit styles saved successfully!');
+    window.location.assign('customer-details.html');
+}
+function submitDesign() {
+    const errors = validateStyles();
+    if (Object.keys(errors).length > 0) {
+        console.log('Style validation errors:', errors);
+        displayErrors(errors);
+        alert('Please complete all required fields: ' + Object.values(errors).join(', '));
+        return;
+    }
+    const fabricNo = document.getElementById('fabricNo').value.trim();
+    const comment = document.getElementById('comment').value.trim();
+    const doc = new jsPDF();
+    doc.setFontSize(16);
+    doc.text('Suit Order Details', 20, 20);
+    doc.setFontSize(12);
+    let y = 30;
+    Object.entries(selectedOptions).forEach(([key, {value}]) => {
+        const label = selectLabels[key] || key;
+        const displayText = value.split(',')[1]?.trim() || value;
+        doc.text(`${label}: ${displayText}`, 20, y);
+        y += 10;
+    });
+    y += 5;
+    doc.text(`Fabric Number: ${fabricNo}`, 20, y);
+    y += 10;
+    doc.text(`Comment: ${comment}`, 20, y);
+    doc.save(`suit_order_${new Date().toISOString().replace(/[:.]/g, '-')}.pdf`);
+    alert('Design submitted successfully! PDF has been downloaded.');
+}
+function printStyles() {
+    const customerName = localStorage.getItem('customerName') || '[Not Provided]';
+    const orderNumber = localStorage.getItem('orderNumber') || '[Not Provided]';
+    document.getElementById('customerName').innerText = `Customer Name: ${customerName}`;
+    document.getElementById('orderNumber').innerText = `Order Number: ${orderNumber}`;
+    const printPreview = document.getElementById('printPreview');
+    printPreview.innerHTML = '';
+    if (Object.keys(selectedOptions).length === 0) {
+        const printError = document.getElementById('printError');
+        printError.style.display = 'block';
+        return;
+    }
+    Object.entries(selectedOptions).forEach(([key, {value, image}]) => {
+        if (value && image) {
+            const displayText = value.split(',')[1]?.trim() || value;
+            const previewItem = document.createElement('div');
+            previewItem.className = 'preview-item';
+            previewItem.innerHTML = `
+                <img src="${image}" alt="${displayText}" onerror="console.error('Failed to load image for print: ${image}')">
+                <p style="display: none;">${displayText}</p>
+            `;
+            printPreview.appendChild(previewItem);
+        }
+    });
+    window.print();
+}
+window.onload = () => {
+    console.log('Window loaded, initializing styles');
+    loadStyles();
+};
+</script>
+</body>
+</html>

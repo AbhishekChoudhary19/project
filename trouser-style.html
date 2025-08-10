@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trouser Style Selection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="manifest" href="manifest.json">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: #0f172a;
+      background-image: linear-gradient(rgba(13, 12, 12, 0.669),rgba(0, 0, 0, 0.388)), url("bgtrouser.jpg");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      overflow-x: hidden;
+    }
+    nav {
+      background-color: #0f172a;
+      padding: 20px 40px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    nav img {
+      height: 80px;
+      width: auto;
+      transition: transform 0.3s ease;
+    }
+    nav img:hover {
+      transform: scale(1.05);
+    }
+    .nav-links {
+      display: flex;
+      gap: 30px;
+    }
+    .nav-links a {
+      color: #e2e8f0;
+      text-decoration: none;
+      font-size: 1.1em;
+      font-weight: 400;
+      transition: color 0.3s ease;
+      letter-spacing: 0.5px;
+    }
+    .nav-links a:hover {
+      color: #000000;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3em;
+      color: #e2e8f0;
+      margin-top: 120px;
+      margin-bottom: 40px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      position: relative;
+    }
+    h2::after {
+      content: 'AUXTER CLUB';
+      width: 90%;
+      height: 2px;
+      background-color: #e9e9e9;
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    form {
+      background: linear-gradient(145deg, rgba(90, 90, 90, 0.98), rgba(10, 9, 9, 0.98));
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      max-width: 1200px;
+      margin: 0 auto 40px;
+      animation: fadeIn 1.2s ease-in-out;
+      transition: transform 0.3s ease;
+    }
+    h3 {
+      font-family: 'Playfair Display', serif;
+      color: #ffffff;
+      font-size: 2em;
+      margin-bottom: 25px;
+      padding-bottom: 10px;
+      font-weight: 600;
+    }
+    .category-section {
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      position: relative;
+      background: rgba(12, 9, 9, 0.274);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 5px 15px rgb(0, 0, 0);
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: 400;
+      color: #ffffff;
+      font-size: 1.2em;
+      letter-spacing: 0.5px;
+      text-align: left;
+      margin-bottom: 15px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #ffffff;
+    }
+    .style-options {
+      width: fit-content;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 15px;
+    }
+    .style-option {
+      cursor: pointer;
+      text-align: center;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      position: relative;
+      padding: 10px;
+      border-radius: 8px;
+      background: white;
+      width: 200px;
+      height: 200px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+    }
+    .style-option img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+      background-color: #fff;
+      padding: 5px;
+    }
+    .style-option.selected {
+      background-color: #0000002f;
+      border-color: #040303;
+    }
+    .style-option.selected img {
+      border-color: #6246a9;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+      transform: scale(1.05);
+    }
+    .style-option:hover {
+      background-color: #f0f8ff;
+      border-color: #371b4a;
+      transform: scale(1.05);
+    }
+    .style-option:hover img {
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgb(0, 0, 0);
+      border-color: #000000;
+    }
+    .style-option p {
+      margin-top: 8px;
+      font-size: 1em;
+      color: #000000;
+      text-align: center;
+      margin: 0;
+    }
+    .style-groups {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .style-group {
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .style-group h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5em;
+      color: #000000;
+      margin-bottom: 10px;
+      font-weight: 600;
+      border-bottom: 1px solid #000000;
+      padding-bottom: 5px;
+    }
+    .style-group .style-options {
+      justify-content: center;
+      gap: 15px;
+    }
+    .error {
+      color: #d32f2f;
+      font-size: 0.95em;
+      margin-top: 10px;
+      font-weight: 400;
+      background-color: #ffe6e6;
+      padding: 8px;
+      border-radius: 6px;
+      display: none;
+    }
+    .error.show {
+      display: inline-block;
+    }
+    button {
+      padding: 15px 40px;
+      background: linear-gradient(145deg, #0f172a, #1e293b);
+      color: #e2e8f0;
+      border: 2px solid #3498db;
+      border-radius: 8px;
+      font-size: 1.1em;
+      font-weight: 400;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.3s, color 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      display: block;
+      margin: 30px auto 0;
+    }
+    button:hover {
+      background: linear-gradient(145deg, #3498db, #2980b9);
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+    .preview-section {
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(240, 240, 240, 0.98));
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      max-width: 1200px;
+      margin: 20px auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      border: 1px solid #e2e8f0;
+    }
+    .preview-item {
+      text-align: center;
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border: 1px solid #000000;
+    }
+    .preview-item img {
+      max-width: 150px;
+      height: auto;
+      border-radius: 10px;
+      border: 2px solid #000000;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+      padding: 5px;
+      transition: transform 0.2s ease;
+    }
+    .preview-item img:hover {
+      transform: scale(1.05);
+    }
+    .preview-item p {
+      margin-top: 10px;
+      font-size: 1em;
+      color: #0f172a;
+      font-weight: 400;
+      letter-spacing: 0.3px;
+    }
+    .print-button {
+      margin: 20px auto;
+    }
+    .print-view {
+      display: none;
+    }
+    .print-view .preview-item {
+      display: inline-block;
+      margin: 10px;
+    }
+    @media print {
+      nav, footer, button, .print-button, form, .preview-section {
+        display: none;
+      }
+      .print-view {
+        display: block;
+        width: 100%;
+        height: auto;
+        box-sizing: border-box;
+        padding: 20px;
+      }
+      .print-view .print-header {
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .print-view .print-header h2 {
+        margin-top: 0;
+        color: #0f172a;
+        font-size: 2em;
+      }
+      .print-view .print-header p {
+        font-size: 1em;
+        color: #333;
+        margin: 5px 0;
+      }
+      .print-view #printPreview {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: auto;
+        gap: 15px;
+        justify-items: center;
+        align-items: start;
+        width: 100%;
+        max-width: 100%;
+        padding: 10px;
+      }
+      .print-view .preview-item {
+        text-align: center;
+        width: 100%;
+        max-width: 200px;
+        box-sizing: border-box;
+      }
+      .print-view .preview-item img {
+        max-width: 100px;
+        height: auto;
+        border: 2px solid #000000;
+        box-shadow: none;
+        border-radius: 5px;
+        padding: 5px;
+        background-color: #fff;
+        display: block;
+      }
+      .print-view .preview-item p {
+        font-size: 0.8em;
+        color: #333;
+        margin-top: 5px;
+        display: none;
+      }
+      .print-view #printError {
+        color: #d32f2f;
+        font-size: 1em;
+        text-align: center;
+        margin-top: 20px;
+      }
+    }
+    footer {
+      background: linear-gradient(145deg, #0f172a, #1e293b);
+      width: 100%;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #e2e8f0;
+      font-size: 0.9em;
+      border-top: 1px solid rgba(52, 152, 219, 0.2);
+    }
+    .footer-logo {
+      height: 50px;
+      width: auto;
+      transition: transform 0.3s ease;
+    }
+    .footer-logo:hover {
+      transform: scale(1.05);
+    }
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+    .footer-links a {
+      color: #e2e8f0;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+    }
+    .footer-links a:hover {
+      color: #3498db;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @media (max-width: 768px) {
+      nav {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .nav-links {
+        gap: 20px;
+      }
+      form, .preview-section {
+        padding: 20px;
+      }
+      h2 {
+        font-size: 2.5em;
+      }
+      h3 {
+        font-size: 1.6em;
+      }
+      button {
+        padding: 12px 30px;
+        font-size: 1em;
+        width: 100%;
+      }
+      nav img {
+        height: 60px;
+      }
+      .footer-logo {
+        height: 40px;
+      }
+      footer {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .preview-item img {
+        max-width: 100px;
+      }
+      .style-option img {
+        max-width: 80px;
+      }
+      .category-section:not(:last-child)::after {
+        width: 90%;
+      }
+      .style-group h4 {
+        font-size: 1.2em;
+      }
+    }
+    @media (max-width: 480px) {
+      nav {
+        padding: 10px 15px;
+      }
+      .nav-links {
+        gap: 15px;
+        flex-direction: column;
+      }
+      h2 {
+        font-size: 2em;
+      }
+      h3 {
+        font-size: 1.4em;
+      }
+      button {
+        font-size: 0.9em;
+      }
+      nav img {
+        height: 50px;
+      }
+      .footer-logo {
+        height: 35px;
+      }
+      .preview-item img {
+        max-width: 80px;
+      }
+      .style-option img {
+        max-width: 60px;
+      }
+      .category-section:not(:last-child)::after {
+        width: 95%;
+      }
+      .style-group h4 {
+        font-size: 1.1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>Trouser Style Selection</h2><br><br><br><br><br><br>
+  <form id="styleForm">
+    <h3>Pick Your Style</h3>
+    <div class="category-section">
+      <label>Trouser Fit</label>
+      <div class="style-groups" data-category="trouserFit">
+        <div class="style-group">
+          <h4>Fit Options</h4>
+          <div class="style-options">
+            <div class="style-option" data-value="T1, Slim fit" data-image="slim-fit.png">
+              <img src="slim-fit.png" alt="Slim Fit" onerror="console.error('Failed to load style option image: slim-fit.png')">
+              <p>Slim</p>
+            </div>
+            <div class="style-option" data-value="T2, Regular fit" data-image="regular-fit.png">
+              <img src="regular-fit.png" alt="Regular Fit" onerror="console.error('Failed to load style option image: regular-fit.png')">
+              <p>Regular</p>
+            </div>
+            <div class="style-option" data-value="T3, Relaxed fit" data-image="relaxed-fit.png">
+              <img src="relaxed-fit.png" alt="Relaxed Fit" onerror="console.error('Failed to load style option image: relaxed-fit.png')">
+              <p>Relaxed</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="trouserFitError" class="error"></div>
+    </div>
+    <div class="category-section">
+      <label>Trouser Pleats</label>
+      <div class="style-groups" data-category="trouserPleats">
+        <div class="style-group">
+          <h4>Pleat Options</h4>
+          <div class="style-options">
+            <div class="style-option" data-value="Pants_Front_Pleats_None" data-image="Pants_Front_Pleats_None.png">
+              <img src="Pants_Front_Pleats_None.png" alt="No Pleats" onerror="console.error('Failed to load style option image: Pants_Front_Pleats_None.png')">
+              <p>No Pleats</p>
+            </div>
+            <div class="style-option" data-value="Pants_Front_Pleats_Darts" data-image="Pants_Front_Pleats_Darts.png">
+              <img src="Pants_Front_Pleats_Darts.png" alt="Front Pleats Darts" onerror="console.error('Failed to load style option image: Pants_Front_Pleats_Darts.png')">
+              <p>Front Pleats Darts</p>
+            </div>
+            <div class="style-option" data-value="Pants_Front_Pleats_Single" data-image="Pants_Front_Pleats_Single.png">
+              <img src="Pants_Front_Pleats_Single.png" alt="Front Pleats Single" onerror="console.error('Failed to load style option image: Pants_Front_Pleats_Single.png')">
+              <p>Front Pleats Single</p>
+            </div>
+            <div class="style-option" data-value="Pants_Front_Pleats_Double" data-image="Pants_Front_Pleats_Double.png">
+              <img src="Pants_Front_Pleats_Double.png" alt="Front Pleats Double" onerror="console.error('Failed to load style option image: Pants_Front_Pleats_Double.png')">
+              <p>Front Pleats Double</p>
+            </div>
+            <div class="style-option" data-value="Pants_Front_Pleats_Reverse" data-image="Pants_Front_Pleats_Reverse.png">
+              <img src="Pants_Front_Pleats_Reverse.png" alt="Front Pleats Reverse" onerror="console.error('Failed to load style option image: Pants_Front_Pleats_Reverse.png')">
+              <p>Front Pleats Reverse</p>
+            </div>
+            <div class="style-option" data-value="Pants_Front_Pleats_Reverse_Double" data-image="Pants_Front_Pleats_Double.png">
+              <img src="Pants_Front_Pleats_Double.png" alt="Front Pleats Reverse Double" onerror="console.error('Failed to load style option image: Pants_Front_Pleats_Double.png')">
+              <p>Front Pleats Reverse Double</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="trouserPleatsError" class="error"></div>
+    </div>
+    <div class="category-section">
+      <label>Waistband Style</label>
+      <div class="style-groups" data-category="waistbandStyle">
+        <div class="style-group">
+          <h4>Waistband Style</h4>
+          <div class="style-options">
+            <div class="style-option" data-value="Pants_Waistband_Standard" data-image="Pants_Waistband_Standard.png">
+              <img src="Pants_Waistband_Standard.png" alt="Standard Waistband" onerror="console.error('Failed to load style option image: Pants_Waistband_Standard.png')">
+              <p>Standard Waistband</p>
+            </div>
+            <div class="style-option" data-value="Pants_Waistband_Button" data-image="Pants_Waistband_Button.png">
+              <img src="Pants_Waistband_Button.png" alt="Waistband with Button" onerror="console.error('Failed to load style option image: Pants_Waistband_Button.png')">
+              <p>Waistband with Button</p>
+            </div>
+            <div class="style-option" data-value="Pants_Waistband_Buckle_emJLOQg" data-image="Pants_Waistband_Buckle_emJLOQg.png">
+              <img src="Pants_Waistband_Buckle_emJLOQg.png" alt="Waistband with Buckle" onerror="console.error('Failed to load style option image: Pants_Waistband_Buckle_emJLOQg.png')">
+              <p>Waistband with Buckle</p>
+            </div>
+            <div class="style-option" data-value="Pants_Closure-Button" data-image="Pants_Closure-Button.png">
+              <img src="Pants_Closure-Button.png" alt="Closure Button" onerror="console.error('Failed to load style option image: Pants_Closure-Button.png')">
+              <p>Closure Button</p>
+            </div>
+            <div class="style-option" data-value="Pants_Closure-Clasp_dVZnr0b" data-image="Pants_Closure-Clasp_dVZnr0b.png">
+              <img src="Pants_Closure-Clasp_dVZnr0b.png" alt="Closure Clasp" onerror="console.error('Failed to load style option image: Pants_Closure-Clasp_dVZnr0b.png')">
+              <p>Closure Clasp</p>
+            </div>
+            <div class="style-option" data-value="Pants_Closure-Button-Clasp" data-image="Pants_Closure-Button-Clasp.png">
+              <img src="Pants_Closure-Button-Clasp.png" alt="Closure Button Clasp" onerror="console.error('Failed to load style option image: Pants_Closure-Button-Clasp.png')">
+              <p>Closure Button Clasp</p>
+            </div>
+            <div class="style-option" data-value="Pants_Closure-2Button_RARRHBc" data-image="Pants_Closure-2Button_RARRHBc.png">
+              <img src="Pants_Closure-2Button_RARRHBc.png" alt="Closure 2 Button" onerror="console.error('Failed to load style option image: Pants_Closure-2Button_RARRHBc.png')">
+              <p>Closure 2 Button</p>
+            </div>
+            <div class="style-option" data-value="Autofit" data-image="Autofit.png">
+              <img src="Autofit.png" alt="Autofit" onerror="console.error('Failed to load style option image: Autofit.png')">
+              <p>Autofit/Flexi</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="waistbandStyleError" class="error"></div>
+    </div>
+    <div class="category-section">
+      <label>Front Pocket</label>
+      <div class="style-groups" data-category="frontpocket">
+        <div class="style-group">
+          <h4>Front Pocket</h4>
+          <div class="style-options">
+            <div class="style-option" data-value="Pants_Waistband_Standard" data-image="Pants_Waistband_Standard.png">
+              <img src="Pants_Waistband_Standard.png" alt="FRENCH Pockets" onerror="console.error('Failed to load style option image: Pants_Waistband_Standard.png')">
+              <p>FRENCH Pockets</p>
+            </div>
+            <div class="style-option" data-value="Pants_Pockets-Welted" data-image="Pants_Pockets-Welted.png">
+              <img src="Pants_Pockets-Welted.png" alt="Welted Pockets" onerror="console.error('Failed to load style option image: Pants_Pockets-Welted.png')">
+              <p>Welted Pockets</p>
+            </div>
+            <div class="style-option" data-value="Pants_Pockets-HiddenWatch_4qVZYOi" data-image="Pants_Pockets-HiddenWatch_4qVZYOi.png">
+              <img src="Pants_Pockets-HiddenWatch_4qVZYOi.png" alt="FRENCH Pocket Hidden Watch Pockets" onerror="console.error('Failed to load style option image: Pants_Pockets-HiddenWatch_4qVZYOi.png')">
+              <p>FRENCH Pocket Hidden Watch Pockets</p>
+            </div>
+            <div class="style-option" data-value="Pants_Pockets-WeltedWatch" data-image="Pants_Pockets-WeltedWatch.png">
+              <img src="Pants_Pockets-WeltedWatch.png" alt="FRENCH Watch Pockets without Flap" onerror="console.error('Failed to load style option image: Pants_Pockets-WeltedWatch.png')">
+              <p>FRENCH Watch Pockets without Flap</p>
+            </div>
+            <div class="style-option" data-value="Pants_Pockets-FlapWatch" data-image="Pants_Pockets-FlapWatch.png">
+              <img src="Pants_Pockets-FlapWatch.png" alt="FRENCH Pockets with Flap" onerror="console.error('Failed to load style option image: Pants_Pockets-FlapWatch.png')">
+              <p>FRENCH Pockets with Flap</p>
+            </div>
+            <div class="style-option" data-value="Pants_Pockets-5-pocket" data-image="Pants_Pockets-5-pocket.png">
+              <img src="Pants_Pockets-5-pocket.png" alt="Jeans Pockets 5 Pocket" onerror="console.error('Failed to load style option image: Pants_Pockets-5-pocket.png')">
+              <p>Jeans Pockets 5 Pocket</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="frontpocketError" class="error"></div>
+    </div>
+    <div class="category-section">
+      <label>Back Pocket</label>
+      <div class="style-groups" data-category="backpocket">
+        <div class="style-group">
+          <h4>Back Pocket</h4>
+          <div class="style-options">
+            <div class="style-option" data-value="Pants_Back_Pockets-None" data-image="Pants_Back_Pockets-None.png">
+              <img src="Pants_Back_Pockets-None.png" alt="Without Back Pocket" onerror="console.error('Failed to load style option image: Pants_Back_Pockets-None.png')">
+              <p>Without Back Pocket</p>
+            </div>
+            <div class="style-option" data-value="Pants_Back_Pockets_Standard" data-image="Pants_Back_Pockets_Standard.png">
+              <img src="Pants_Back_Pockets_Standard.png" alt="Standard Back Pockets" onerror="console.error('Failed to load style option image: Pants_Back_Pockets_Standard.png')">
+              <p>Standard Back Pockets</p>
+            </div>
+            <div class="style-option" data-value="Pants_Back_Pockets_Right_Button" data-image="Pants_Back_Pockets_Right_Button.png">
+              <img src="Pants_Back_Pockets_Right_Button.png" alt="Back Pockets Right Button" onerror="console.error('Failed to load style option image: Pants_Back_Pockets_Right_Button.png')">
+              <p>Back Pockets Right Button</p>
+            </div>
+            <div class="style-option" data-value="Pants_Back_Pockets-LeftButton_xQ3Mw2H" data-image="Pants_Back_Pockets-LeftButton_xQ3Mw2H.png">
+              <img src="Pants_Back_Pockets-LeftButton_xQ3Mw2H.png" alt="Back Pockets Left Button" onerror="console.error('Failed to load style option image: Pants_Back_Pockets-LeftButton_xQ3Mw2H.png')">
+              <p>Back Pockets Left Button</p>
+            </div>
+            <div class="style-option" data-value="Pants_Back_Pockets-RightPocket_0XVuH3K" data-image="Pants_Back_Pockets-RightPocket_0XVuH3K.png">
+              <img src="Pants_Back_Pockets-RightPocket_0XVuH3K.png" alt="Right Pocket" onerror="console.error('Failed to load style option image: Pants_Back_Pockets-RightPocket_0XVuH3K.png')">
+              <p>Right Pocket</p>
+            </div>
+            <div class="style-option" data-value="Pants_Back_Pockets-LeftPocket" data-image="Pants_Back_Pockets-LeftPocket.png">
+              <img src="Pants_Back_Pockets-LeftPocket.png" alt="Left Pocket" onerror="console.error('Failed to load style option image: Pants_Back_Pockets-LeftPocket.png')">
+              <p>Left Pocket</p>
+            </div>
+            <div class="style-option" data-value="Pants_Back_Pockets_No_Buttons" data-image="Pants_Back_Pockets_No_Buttons.png">
+              <img src="Pants_Back_Pockets_No_Buttons.png" alt="No Buttons" onerror="console.error('Failed to load style option image: Pants_Back_Pockets_No_Buttons.png')">
+              <p>No Buttons</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="backpocketError" class="error"></div>
+    </div>
+    <div class="category-section">
+      <label>Bottom Style</label>
+      <div class="style-groups" data-category="bottomStyle">
+        <div class="style-group">
+          <h4>Bottom Style</h4>
+          <div class="style-options">
+            <div class="style-option" data-value="Pants_Cuffs_Cuffed_rrR7lYx" data-image="Pants_Cuffs_Cuffed_rrR7lYx.png">
+              <img src="Pants_Cuffs_Cuffed_rrR7lYx.png" alt="Turned Bottom" onerror="console.error('Failed to load style option image: Pants_Cuffs_Cuffed_rrR7lYx.png')">
+              <p>Turned Bottom</p>
+            </div>
+            <div class="style-option" data-value="Pants_Cuffs_None_YwAd7SP" data-image="Pants_Cuffs_None_YwAd7SP.png">
+              <img src="Pants_Cuffs_None_YwAd7SP.png" alt="Plain Bottom" onerror="console.error('Failed to load style option image: Pants_Cuffs_None_YwAd7SP.png')">
+              <p>Plain Bottom</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="bottomStyleError" class="error"></div>
+    </div>
+    <div class="category-section">
+      <label>Additional Details</label>
+      <div class="style-group">
+        <h4>Fabric and Comments</h4>
+        <div class="input-group">
+          <label for="fabricNo" style="color: #040303;">Fabric Name:</label>
+          <input type="text" id="fabricNo" name="fabricNo" style="width: 70%;">
+        </div>
+        <div class="input-group">
+          <label for="comment" style="color: #040303;">Description:</label>
+          <input type="text" id="comment" name="comment">
+        </div>
+      </div>
+      <div id="additionalDetailsError" class="error"></div>
+    </div>
+    <button type="button" onclick="saveStyles()">Save Trouser Styles</button>
+    <button type="button" onclick="submitDesign()">Submit Design</button>
+  </form>
+  <button class="print-button" onclick="printStyles()">Print Selected Trouser Styles</button>
+  <div class="print-view" id="printView">
+    <div class="print-header">
+      <h2>Selected Trouser Styles</h2>
+      <p id="customerName">Customer Name: </p>
+      <p id="orderNumber">Order Number: </p>
+    </div>
+    <div id="printPreview"></div>
+    <div id="printError" class="error" style="display: none;">No styles selected for printing.</div>
+  </div>
+  <script>
+    const { jsPDF } = window.jspdf;
+    const selectedOptions = {};
+    const selectLabels = {
+      trouserFit: 'Trouser Fit',
+      trouserPleats: 'Trouser Pleats',
+      waistbandStyle: 'Waistband Style',
+      frontpocket: 'Front Pocket',
+      backpocket: 'Back Pocket',
+      bottomStyle: 'Bottom Style'
+    };
+    function loadStyles() {
+      const savedStyles = JSON.parse(localStorage.getItem('suitStyles') || '{}');
+      console.log('Loaded styles from localStorage:', savedStyles);
+      for (const [key, {value, image}] of Object.entries(savedStyles)) {
+        if (selectLabels[key]) {
+          const categoryDiv = document.querySelector(`[data-category="${key}"]`);
+          if (categoryDiv) {
+            const option = categoryDiv.querySelector(`.style-option[data-value="${value}"]`);
+            if (option) {
+              option.classList.add('selected');
+              selectedOptions[key] = { value, image };
+            }
+          }
+        }
+      }
+      updatePreview();
+      console.log('Initial selectedOptions:', selectedOptions);
+    }
+    document.querySelectorAll('.style-option').forEach(option => {
+      option.addEventListener('click', () => {
+        const category = option.closest('[data-category]').getAttribute('data-category');
+        const value = option.getAttribute('data-value');
+        const image = option.getAttribute('data-image');
+        const previouslySelected = option.closest('[data-category]').querySelector('.style-option.selected');
+        if (previouslySelected) {
+          previouslySelected.classList.remove('selected');
+        }
+        option.classList.add('selected');
+        selectedOptions[category] = { value, image };
+        updatePreview();
+        console.log(`Selected ${category}:`, selectedOptions[category]);
+      });
+    });
+    function updatePreview() {
+      const previewSection = document.getElementById('previewSection') || document.createElement('div');
+      if (!previewSection.id) {
+        previewSection.id = 'previewSection';
+        previewSection.className = 'preview-section';
+        document.getElementById('styleForm').after(previewSection);
+      }
+      previewSection.innerHTML = '';
+      Object.entries(selectedOptions).forEach(([key, {value, image}]) => {
+        if (value && image) {
+          const label = selectLabels[key] || key;
+          const displayText = value.split(',')[1]?.trim() || value;
+          const previewItem = document.createElement('div');
+          previewItem.className = 'preview-item';
+          previewItem.innerHTML = `
+            <img src="${image}" alt="${displayText}" onerror="console.error('Failed to load preview image: ${image}')">
+            <p>${label}: ${displayText}</p>
+          `;
+          previewSection.appendChild(previewItem);
+        }
+      });
+    }
+    function validateStyles() {
+      const errors = {};
+      const requiredCategories = [
+        'trouserFit', 'trouserPleats', 'waistbandStyle', 'frontpocket', 'backpocket', 'bottomStyle'
+      ];
+      requiredCategories.forEach(category => {
+        if (!selectedOptions[category] || !selectedOptions[category].value) {
+          errors[category] = `Please select a ${selectLabels[category].toLowerCase()}.`;
+        }
+      });
+      const fabricNo = document.getElementById('fabricNo').value.trim();
+      const comment = document.getElementById('comment').value.trim();
+   
+    }
+    function displayErrors(errors) {
+      document.querySelectorAll('.error').forEach(el => {
+        el.innerText = '';
+        el.classList.remove('show');
+      });
+      Object.entries(errors).forEach(([key, message]) => {
+        const errorEl = document.getElementById(
+          key === 'fabricNo' || key === 'comment' ? 'additionalDetailsError' : `${key}Error`
+        );
+        if (errorEl) {
+          errorEl.innerText = message;
+          errorEl.classList.add('show');
+        }
+      });
+    }
+    function saveStyles() {
+      const errors = validateStyles();
+      if (Object.keys(errors).length > 0) {
+        console.log('Style validation errors:', errors);
+        displayErrors(errors);
+        alert('Please select all required trouser styles: ' + Object.values(errors).join(', '));
+        return;
+      }
+      const existingStyles = JSON.parse(localStorage.getItem('suitStyles') || '{}');
+      const updatedStyles = { ...existingStyles, ...selectedOptions };
+      localStorage.setItem('suitStyles', JSON.stringify(updatedStyles));
+      console.log('Saved trouser styles to localStorage:', updatedStyles);
+      alert('Trouser styles saved successfully!');
+      window.location.assign('customer-details.html');
+    }
+    function submitDesign() {
+      const errors = validateStyles();
+      if (Object.keys(errors).length > 0) {
+        console.log('Style validation errors:', errors);
+        displayErrors(errors);
+        alert('Please complete all required fields: ' + Object.values(errors).join(', '));
+        return;
+      }
+      const fabricNo = document.getElementById('fabricNo').value.trim();
+      const comment = document.getElementById('comment').value.trim();
+      const doc = new jsPDF();
+      doc.setFontSize(16);
+      doc.text('Maison Straver - Trouser Order Details', 20, 20);
+      doc.setFontSize(12);
+      let y = 30;
+      Object.entries(selectedOptions).forEach(([key, {value}]) => {
+        const label = selectLabels[key] || key;
+        const displayText = value.split(',')[1]?.trim() || value;
+        doc.text(`${label}: ${displayText}`, 20, y);
+        y += 10;
+      });
+      y += 5;
+      doc.text(`Fabric Number: ${fabricNo}`, 20, y);
+      y += 10;
+      doc.text(`Comment: ${comment}`, 20, y);
+      doc.save(`trouser_order_${new Date().toISOString().replace(/[:.]/g, '-')}.pdf`);
+      alert('Design submitted successfully! PDF has been downloaded.');
+    }
+    function printStyles() {
+      const customerName = localStorage.getItem('customerName') || '[Not Provided]';
+      const orderNumber = localStorage.getItem('orderNumber') || '[Not Provided]';
+      document.getElementById('customerName').innerText = `Customer Name: ${customerName}`;
+      document.getElementById('orderNumber').innerText = `Order Number: ${orderNumber}`;
+      const printPreview = document.getElementById('printPreview');
+      printPreview.innerHTML = '';
+      if (Object.keys(selectedOptions).length === 0) {
+        const printError = document.getElementById('printError');
+        printError.style.display = 'block';
+        return;
+      }
+      Object.entries(selectedOptions).forEach(([key, {value, image}]) => {
+        if (value && image) {
+          const displayText = value.split(',')[1]?.trim() || value;
+          const previewItem = document.createElement('div');
+          previewItem.className = 'preview-item';
+          previewItem.innerHTML = `
+            <img src="${image}" alt="${displayText}" onerror="console.error('Failed to load print image: ${image}')">
+            <p style="display: none;">${displayText}</p>
+          `;
+          printPreview.appendChild(previewItem);
+        }
+      });
+      window.print();
+    }
+    window.onload = () => {
+      console.log('Window loaded, initializing styles');
+      loadStyles();
+    };
+  </script>
+</body>
+</html>
