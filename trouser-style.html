@@ -141,7 +141,7 @@
       border-radius: 8px;
       background: white;
       width: 200px;
-      height: 200px;
+      height: 250px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
       display: flex;
       flex-direction: column;
@@ -490,6 +490,19 @@
         font-size: 1.1em;
       }
     }
+    .color-picker {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .color-picker input[type="color"] {
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -505,14 +518,23 @@
             <div class="style-option" data-value="T1, Slim fit" data-image="slim-fit.png">
               <img src="slim-fit.png" alt="Slim Fit" onerror="console.error('Failed to load style option image: slim-fit.png')">
               <p>Slim</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="T2, Regular fit" data-image="regular-fit.png">
               <img src="regular-fit.png" alt="Regular Fit" onerror="console.error('Failed to load style option image: regular-fit.png')">
               <p>Regular</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="T3, Relaxed fit" data-image="relaxed-fit.png">
               <img src="relaxed-fit.png" alt="Relaxed Fit" onerror="console.error('Failed to load style option image: relaxed-fit.png')">
               <p>Relaxed</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
           </div>
         </div>
@@ -528,26 +550,44 @@
             <div class="style-option" data-value="Pants_Front_Pleats_None" data-image="Pants_Front_Pleats_None.png">
               <img src="Pants_Front_Pleats_None.png" alt="No Pleats" onerror="console.error('Failed to load style option image: Pants_Front_Pleats_None.png')">
               <p>No Pleats</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="Pants_Front_Pleats_Darts" data-image="Pants_Front_Pleats_Darts.png">
               <img src="Pants_Front_Pleats_Darts.png" alt="Front Pleats Darts" onerror="console.error('Failed to load style option image: Pants_Front_Pleats_Darts.png')">
               <p>Front Pleats Darts</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="Pants_Front_Pleats_Single" data-image="Pants_Front_Pleats_Single.png">
               <img src="Pants_Front_Pleats_Single.png" alt="Front Pleats Single" onerror="console.error('Failed to load style option image: Pants_Front_Pleats_Single.png')">
               <p>Front Pleats Single</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="Pants_Front_Pleats_Double" data-image="Pants_Front_Pleats_Double.png">
               <img src="Pants_Front_Pleats_Double.png" alt="Front Pleats Double" onerror="console.error('Failed to load style option image: Pants_Front_Pleats_Double.png')">
               <p>Front Pleats Double</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="Pants_Front_Pleats_Reverse" data-image="Pants_Front_Pleats_Reverse.png">
               <img src="Pants_Front_Pleats_Reverse.png" alt="Front Pleats Reverse" onerror="console.error('Failed to load style option image: Pants_Front_Pleats_Reverse.png')">
               <p>Front Pleats Reverse</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="Pants_Front_Pleats_Reverse_Double" data-image="Pants_Front_Pleats_Double.png">
               <img src="Pants_Front_Pleats_Double.png" alt="Front Pleats Reverse Double" onerror="console.error('Failed to load style option image: Pants_Front_Pleats_Double.png')">
               <p>Front Pleats Reverse Double</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
           </div>
         </div>
@@ -563,34 +603,58 @@
             <div class="style-option" data-value="Pants_Waistband_Standard" data-image="Pants_Waistband_Standard.png">
               <img src="Pants_Waistband_Standard.png" alt="Standard Waistband" onerror="console.error('Failed to load style option image: Pants_Waistband_Standard.png')">
               <p>Standard Waistband</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="Pants_Waistband_Button" data-image="Pants_Waistband_Button.png">
               <img src="Pants_Waistband_Button.png" alt="Waistband with Button" onerror="console.error('Failed to load style option image: Pants_Waistband_Button.png')">
               <p>Waistband with Button</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="Pants_Waistband_Buckle_emJLOQg" data-image="Pants_Waistband_Buckle_emJLOQg.png">
               <img src="Pants_Waistband_Buckle_emJLOQg.png" alt="Waistband with Buckle" onerror="console.error('Failed to load style option image: Pants_Waistband_Buckle_emJLOQg.png')">
               <p>Waistband with Buckle</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="Pants_Closure-Button" data-image="Pants_Closure-Button.png">
               <img src="Pants_Closure-Button.png" alt="Closure Button" onerror="console.error('Failed to load style option image: Pants_Closure-Button.png')">
               <p>Closure Button</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="Pants_Closure-Clasp_dVZnr0b" data-image="Pants_Closure-Clasp_dVZnr0b.png">
               <img src="Pants_Closure-Clasp_dVZnr0b.png" alt="Closure Clasp" onerror="console.error('Failed to load style option image: Pants_Closure-Clasp_dVZnr0b.png')">
               <p>Closure Clasp</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="Pants_Closure-Button-Clasp" data-image="Pants_Closure-Button-Clasp.png">
               <img src="Pants_Closure-Button-Clasp.png" alt="Closure Button Clasp" onerror="console.error('Failed to load style option image: Pants_Closure-Button-Clasp.png')">
               <p>Closure Button Clasp</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="Pants_Closure-2Button_RARRHBc" data-image="Pants_Closure-2Button_RARRHBc.png">
               <img src="Pants_Closure-2Button_RARRHBc.png" alt="Closure 2 Button" onerror="console.error('Failed to load style option image: Pants_Closure-2Button_RARRHBc.png')">
               <p>Closure 2 Button</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="Autofit" data-image="Autofit.png">
               <img src="Autofit.png" alt="Autofit" onerror="console.error('Failed to load style option image: Autofit.png')">
               <p>Autofit/Flexi</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
           </div>
         </div>
@@ -606,26 +670,44 @@
             <div class="style-option" data-value="Pants_Waistband_Standard" data-image="Pants_Waistband_Standard.png">
               <img src="Pants_Waistband_Standard.png" alt="FRENCH Pockets" onerror="console.error('Failed to load style option image: Pants_Waistband_Standard.png')">
               <p>FRENCH Pockets</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="Pants_Pockets-Welted" data-image="Pants_Pockets-Welted.png">
               <img src="Pants_Pockets-Welted.png" alt="Welted Pockets" onerror="console.error('Failed to load style option image: Pants_Pockets-Welted.png')">
               <p>Welted Pockets</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="Pants_Pockets-HiddenWatch_4qVZYOi" data-image="Pants_Pockets-HiddenWatch_4qVZYOi.png">
               <img src="Pants_Pockets-HiddenWatch_4qVZYOi.png" alt="FRENCH Pocket Hidden Watch Pockets" onerror="console.error('Failed to load style option image: Pants_Pockets-HiddenWatch_4qVZYOi.png')">
               <p>FRENCH Pocket Hidden Watch Pockets</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="Pants_Pockets-WeltedWatch" data-image="Pants_Pockets-WeltedWatch.png">
               <img src="Pants_Pockets-WeltedWatch.png" alt="FRENCH Watch Pockets without Flap" onerror="console.error('Failed to load style option image: Pants_Pockets-WeltedWatch.png')">
               <p>FRENCH Watch Pockets without Flap</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="Pants_Pockets-FlapWatch" data-image="Pants_Pockets-FlapWatch.png">
               <img src="Pants_Pockets-FlapWatch.png" alt="FRENCH Pockets with Flap" onerror="console.error('Failed to load style option image: Pants_Pockets-FlapWatch.png')">
               <p>FRENCH Pockets with Flap</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="Pants_Pockets-5-pocket" data-image="Pants_Pockets-5-pocket.png">
               <img src="Pants_Pockets-5-pocket.png" alt="Jeans Pockets 5 Pocket" onerror="console.error('Failed to load style option image: Pants_Pockets-5-pocket.png')">
               <p>Jeans Pockets 5 Pocket</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
           </div>
         </div>
@@ -641,30 +723,51 @@
             <div class="style-option" data-value="Pants_Back_Pockets-None" data-image="Pants_Back_Pockets-None.png">
               <img src="Pants_Back_Pockets-None.png" alt="Without Back Pocket" onerror="console.error('Failed to load style option image: Pants_Back_Pockets-None.png')">
               <p>Without Back Pocket</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="Pants_Back_Pockets_Standard" data-image="Pants_Back_Pockets_Standard.png">
               <img src="Pants_Back_Pockets_Standard.png" alt="Standard Back Pockets" onerror="console.error('Failed to load style option image: Pants_Back_Pockets_Standard.png')">
               <p>Standard Back Pockets</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="Pants_Back_Pockets_Right_Button" data-image="Pants_Back_Pockets_Right_Button.png">
               <img src="Pants_Back_Pockets_Right_Button.png" alt="Back Pockets Right Button" onerror="console.error('Failed to load style option image: Pants_Back_Pockets_Right_Button.png')">
               <p>Back Pockets Right Button</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="Pants_Back_Pockets-LeftButton_xQ3Mw2H" data-image="Pants_Back_Pockets-LeftButton_xQ3Mw2H.png">
               <img src="Pants_Back_Pockets-LeftButton_xQ3Mw2H.png" alt="Back Pockets Left Button" onerror="console.error('Failed to load style option image: Pants_Back_Pockets-LeftButton_xQ3Mw2H.png')">
               <p>Back Pockets Left Button</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="Pants_Back_Pockets-RightPocket_0XVuH3K" data-image="Pants_Back_Pockets-RightPocket_0XVuH3K.png">
               <img src="Pants_Back_Pockets-RightPocket_0XVuH3K.png" alt="Right Pocket" onerror="console.error('Failed to load style option image: Pants_Back_Pockets-RightPocket_0XVuH3K.png')">
               <p>Right Pocket</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="Pants_Back_Pockets-LeftPocket" data-image="Pants_Back_Pockets-LeftPocket.png">
               <img src="Pants_Back_Pockets-LeftPocket.png" alt="Left Pocket" onerror="console.error('Failed to load style option image: Pants_Back_Pockets-LeftPocket.png')">
               <p>Left Pocket</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="Pants_Back_Pockets_No_Buttons" data-image="Pants_Back_Pockets_No_Buttons.png">
               <img src="Pants_Back_Pockets_No_Buttons.png" alt="No Buttons" onerror="console.error('Failed to load style option image: Pants_Back_Pockets_No_Buttons.png')">
               <p>No Buttons</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
           </div>
         </div>
@@ -680,10 +783,16 @@
             <div class="style-option" data-value="Pants_Cuffs_Cuffed_rrR7lYx" data-image="Pants_Cuffs_Cuffed_rrR7lYx.png">
               <img src="Pants_Cuffs_Cuffed_rrR7lYx.png" alt="Turned Bottom" onerror="console.error('Failed to load style option image: Pants_Cuffs_Cuffed_rrR7lYx.png')">
               <p>Turned Bottom</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
             <div class="style-option" data-value="Pants_Cuffs_None_YwAd7SP" data-image="Pants_Cuffs_None_YwAd7SP.png">
               <img src="Pants_Cuffs_None_YwAd7SP.png" alt="Plain Bottom" onerror="console.error('Failed to load style option image: Pants_Cuffs_None_YwAd7SP.png')">
               <p>Plain Bottom</p>
+              <div class="color-picker">
+                <input type="color" class="color-input" value="#ffffff">
+              </div>
             </div>
           </div>
         </div>
@@ -702,21 +811,32 @@
           <label for="comment" style="color: #040303;">Description:</label>
           <input type="text" id="comment" name="comment">
         </div>
+        <div class="input-group">
+          <label for="customerName" style="color: #040303;">Name:</label>
+          <input type="text" id="customerName" name="customerName">
+        </div>
+        <div class="input-group">
+          <label for="mobileNo" style="color: #040303;">Mobile Number:</label>
+          <input type="text" id="mobileNo" name="mobileNo">
+        </div>
       </div>
       <div id="additionalDetailsError" class="error"></div>
     </div>
     <button type="button" onclick="saveStyles()">Save Trouser Styles</button>
     <button type="button" onclick="submitDesign()">Submit Design</button>
+    <button type="button" onclick="reset()">Reset</button>
   </form>
-  <button class="print-button" onclick="printStyles()">Print Selected Trouser Styles</button>
-  <div class="print-view" id="printView">
-    <div class="print-header">
-      <h2>Selected Trouser Styles</h2>
-      <p id="customerName">Customer Name: </p>
-      <p id="orderNumber">Order Number: </p>
+  <div class="category-section">
+    <button class="print-button" onclick="printStyles()">Print Selected Trouser Styles</button>
+    <div class="print-view" id="printView">
+      <div class="print-header">
+        <h2>Selected Trouser Styles</h2>
+        <p id="customerNameDisplay">Customer Name:</p>
+        <p id="orderNumber">Order Number:</p>
+      </div>
+      <div id="printPreview"></div>
+      <div id="printError" class="error" style="display: none;">No styles selected for printing.</div>
     </div>
-    <div id="printPreview"></div>
-    <div id="printError" class="error" style="display: none;">No styles selected for printing.</div>
   </div>
   <script>
     const { jsPDF } = window.jspdf;
@@ -729,17 +849,23 @@
       backpocket: 'Back Pocket',
       bottomStyle: 'Bottom Style'
     };
+
     function loadStyles() {
       const savedStyles = JSON.parse(localStorage.getItem('suitStyles') || '{}');
       console.log('Loaded styles from localStorage:', savedStyles);
-      for (const [key, {value, image}] of Object.entries(savedStyles)) {
+      for (const [key, { value, image, color }] of Object.entries(savedStyles)) {
         if (selectLabels[key]) {
           const categoryDiv = document.querySelector(`[data-category="${key}"]`);
           if (categoryDiv) {
             const option = categoryDiv.querySelector(`.style-option[data-value="${value}"]`);
             if (option) {
               option.classList.add('selected');
-              selectedOptions[key] = { value, image };
+              selectedOptions[key] = { value, image, color };
+              const colorInput = option.querySelector('.color-input');
+              if (colorInput && color) {
+                colorInput.value = color;
+                applyColorFilter(option.querySelector('img'), color);
+              }
             }
           }
         }
@@ -747,21 +873,61 @@
       updatePreview();
       console.log('Initial selectedOptions:', selectedOptions);
     }
+
+    function applyColorFilter(img, color) {
+      img.style.filter = `hue-rotate(${getHueFromHex(color)}deg)`;
+    }
+
+    function getHueFromHex(hex) {
+      const r = parseInt(hex.slice(1, 3), 16) / 255;
+      const g = parseInt(hex.slice(3, 5), 16) / 255;
+      const b = parseInt(hex.slice(5, 7), 16) / 255;
+      const max = Math.max(r, g, b), min = Math.min(r, g, b);
+      let h;
+      if (max === min) {
+        h = 0;
+      } else if (max === r) {
+        h = (60 * ((g - b) / (max - min)) + 360) % 360;
+      } else if (max === g) {
+        h = 60 * ((b - r) / (max - min)) + 120;
+      } else {
+        h = 60 * ((r - g) / (max - min)) + 240;
+      }
+      return h;
+    }
+
     document.querySelectorAll('.style-option').forEach(option => {
       option.addEventListener('click', () => {
         const category = option.closest('[data-category]').getAttribute('data-category');
         const value = option.getAttribute('data-value');
         const image = option.getAttribute('data-image');
+        const colorInput = option.querySelector('.color-input');
+        const color = colorInput ? colorInput.value : '#ffffff';
+
         const previouslySelected = option.closest('[data-category]').querySelector('.style-option.selected');
         if (previouslySelected) {
           previouslySelected.classList.remove('selected');
         }
         option.classList.add('selected');
-        selectedOptions[category] = { value, image };
+        selectedOptions[category] = { value, image, color };
         updatePreview();
         console.log(`Selected ${category}:`, selectedOptions[category]);
       });
+
+      const colorInput = option.querySelector('.color-input');
+      if (colorInput) {
+        colorInput.addEventListener('change', () => {
+          const category = option.closest('[data-category]').getAttribute('data-category');
+          const img = option.querySelector('img');
+          applyColorFilter(img, colorInput.value);
+          if (selectedOptions[category]) {
+            selectedOptions[category].color = colorInput.value;
+            updatePreview();
+          }
+        });
+      }
     });
+
     function updatePreview() {
       const previewSection = document.getElementById('previewSection') || document.createElement('div');
       if (!previewSection.id) {
@@ -770,20 +936,21 @@
         document.getElementById('styleForm').after(previewSection);
       }
       previewSection.innerHTML = '';
-      Object.entries(selectedOptions).forEach(([key, {value, image}]) => {
+      Object.entries(selectedOptions).forEach(([key, { value, image, color }]) => {
         if (value && image) {
           const label = selectLabels[key] || key;
           const displayText = value.split(',')[1]?.trim() || value;
           const previewItem = document.createElement('div');
           previewItem.className = 'preview-item';
           previewItem.innerHTML = `
-            <img src="${image}" alt="${displayText}" onerror="console.error('Failed to load preview image: ${image}')">
+            <img src="${image}" alt="${displayText}" style="filter: hue-rotate(${getHueFromHex(color || '#ffffff')}deg)" onerror="console.error('Failed to load preview image: ${image}')">
             <p>${label}: ${displayText}</p>
           `;
           previewSection.appendChild(previewItem);
         }
       });
     }
+
     function validateStyles() {
       const errors = {};
       const requiredCategories = [
@@ -796,8 +963,13 @@
       });
       const fabricNo = document.getElementById('fabricNo').value.trim();
       const comment = document.getElementById('comment').value.trim();
-   
+      const customerName = document.getElementById('customerName').value.trim();
+      const mobileNo = document.getElementById('mobileNo').value.trim();
+      if (!customerName) errors['customerName'] = 'Please enter a customer name.';
+      if (!mobileNo) errors['mobileNo'] = 'Please enter a mobile number.';
+      return errors;
     }
+
     function displayErrors(errors) {
       document.querySelectorAll('.error').forEach(el => {
         el.innerText = '';
@@ -805,7 +977,7 @@
       });
       Object.entries(errors).forEach(([key, message]) => {
         const errorEl = document.getElementById(
-          key === 'fabricNo' || key === 'comment' ? 'additionalDetailsError' : `${key}Error`
+          key === 'fabricNo' || key === 'comment' || key === 'customerName' || key === 'mobileNo' ? 'additionalDetailsError' : `${key}Error`
         );
         if (errorEl) {
           errorEl.innerText = message;
@@ -813,12 +985,13 @@
         }
       });
     }
+
     function saveStyles() {
       const errors = validateStyles();
       if (Object.keys(errors).length > 0) {
         console.log('Style validation errors:', errors);
         displayErrors(errors);
-        alert('Please select all required trouser styles: ' + Object.values(errors).join(', '));
+        alert('Please complete all required fields: ' + Object.values(errors).join(', '));
         return;
       }
       const existingStyles = JSON.parse(localStorage.getItem('suitStyles') || '{}');
@@ -828,6 +1001,7 @@
       alert('Trouser styles saved successfully!');
       window.location.assign('customer-details.html');
     }
+
     function submitDesign() {
       const errors = validateStyles();
       if (Object.keys(errors).length > 0) {
@@ -838,43 +1012,80 @@
       }
       const fabricNo = document.getElementById('fabricNo').value.trim();
       const comment = document.getElementById('comment').value.trim();
+      const customerName = document.getElementById('customerName').value.trim();
+      const mobileNo = document.getElementById('mobileNo').value.trim();
+
       const doc = new jsPDF();
+      doc.setFontSize(22);
+      doc.setFont("helvetica", "bold");
+      doc.text("Auxter Club", doc.internal.pageSize.getWidth() / 2, 20, { align: "center" });
       doc.setFontSize(16);
-      doc.text('Maison Straver - Trouser Order Details', 20, 20);
+      doc.setFont("helvetica", "normal");
+      doc.text("Trouser Order Details", doc.internal.pageSize.getWidth() / 2, 30, { align: "center" });
+      let startY = 40;
+      doc.setLineWidth(0.5);
+      doc.rect(15, startY, doc.internal.pageSize.getWidth() - 30, 150);
       doc.setFontSize(12);
-      let y = 30;
-      Object.entries(selectedOptions).forEach(([key, {value}]) => {
+      let y = startY + 10;
+      const lineHeight = 8;
+
+      function addDetail(label, value) {
+        doc.setFont("helvetica", "bold");
+        doc.text(label + ":", 20, y);
+        doc.setFont("helvetica", "normal");
+        doc.text(value || "N/A", 70, y);
+        y += lineHeight;
+      }
+
+      addDetail("Customer Name", customerName);
+      addDetail("Mobile Number", mobileNo);
+      Object.entries(selectedOptions).forEach(([key, { value, color }]) => {
         const label = selectLabels[key] || key;
         const displayText = value.split(',')[1]?.trim() || value;
-        doc.text(`${label}: ${displayText}`, 20, y);
-        y += 10;
+        addDetail(label, `${displayText} (Color: ${color || '#ffffff'})`);
       });
-      y += 5;
-      doc.text(`Fabric Number: ${fabricNo}`, 20, y);
-      y += 10;
-      doc.text(`Comment: ${comment}`, 20, y);
+      addDetail("Fabric Number", fabricNo);
+      addDetail("Comment", comment);
+      doc.setFontSize(10);
+      doc.setTextColor(100);
+      doc.text("Thank you for choosing Auxter Club!", doc.internal.pageSize.getWidth() / 2, y + 15, { align: "center" });
       doc.save(`trouser_order_${new Date().toISOString().replace(/[:.]/g, '-')}.pdf`);
       alert('Design submitted successfully! PDF has been downloaded.');
     }
+
+    function reset() {
+      document.querySelectorAll('.style-option.selected').forEach(option => {
+        option.classList.remove('selected');
+      });
+      document.getElementById('fabricNo').value = '';
+      document.getElementById('comment').value = '';
+      document.getElementById('customerName').value = '';
+      document.getElementById('mobileNo').value = '';
+      Object.keys(selectedOptions).forEach(key => delete selectedOptions[key]);
+      localStorage.removeItem('suitStyles');
+      updatePreview();
+      console.log('Form reset, selectedOptions cleared:', selectedOptions);
+      alert('Form has been reset.');
+    }
+
     function printStyles() {
-      const customerName = localStorage.getItem('customerName') || '[Not Provided]';
-      const orderNumber = localStorage.getItem('orderNumber') || '[Not Provided]';
-      document.getElementById('customerName').innerText = `Customer Name: ${customerName}`;
-      document.getElementById('orderNumber').innerText = `Order Number: ${orderNumber}`;
       const printPreview = document.getElementById('printPreview');
       printPreview.innerHTML = '';
+      const customerName = document.getElementById('customerName').value.trim() || 'N/A';
+      document.getElementById('customerNameDisplay').innerText = `Customer Name: ${customerName}`;
+      document.getElementById('orderNumber').innerText = `Order Number: ${new Date().toISOString().replace(/[:.]/g, '-')}`;
       if (Object.keys(selectedOptions).length === 0) {
         const printError = document.getElementById('printError');
         printError.style.display = 'block';
         return;
       }
-      Object.entries(selectedOptions).forEach(([key, {value, image}]) => {
+      Object.entries(selectedOptions).forEach(([key, { value, image, color }]) => {
         if (value && image) {
           const displayText = value.split(',')[1]?.trim() || value;
           const previewItem = document.createElement('div');
           previewItem.className = 'preview-item';
           previewItem.innerHTML = `
-            <img src="${image}" alt="${displayText}" onerror="console.error('Failed to load print image: ${image}')">
+            <img src="${image}" alt="${displayText}" style="filter: hue-rotate(${getHueFromHex(color || '#ffffff')}deg)" onerror="console.error('Failed to load print image: ${image}')">
             <p style="display: none;">${displayText}</p>
           `;
           printPreview.appendChild(previewItem);
@@ -882,6 +1093,7 @@
       });
       window.print();
     }
+
     window.onload = () => {
       console.log('Window loaded, initializing styles');
       loadStyles();
